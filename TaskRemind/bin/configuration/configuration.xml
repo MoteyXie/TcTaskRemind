@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MR>
+	<User name="infodba" password="infodba"/>
+	<User name="root" password="111111"/>
+	<Link ip="127.0.0.0" host="7001"></Link>
+	<AutoLogin>TRUE</AutoLogin>
+	
+	<Alert autoClosetime="10000" />
+</MR>

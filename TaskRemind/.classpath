@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="lib" path="libs/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="libs/AWTUtilities.jar"/>
+	<classpathentry kind="lib" path="libs/fccclient.jar"/>
+	<classpathentry kind="lib" path="libs/fscclient.jar"/>
+	<classpathentry kind="lib" path="libs/log4j.jar"/>
+	<classpathentry kind="lib" path="libs/org.apache.commons.logging_1.1.1.v201101211721.jar"/>
+	<classpathentry kind="lib" path="libs/poi-ooxml-schemas-3.9-20121203.jar"/>
+	<classpathentry kind="lib" path="libs/resolver.jar"/>
+	<classpathentry kind="lib" path="libs/tcmemjavabinding.jar"/>
+	<classpathentry kind="lib" path="libs/tcserverjavabinding.jar"/>
+	<classpathentry kind="lib" path="libs/TcSoaClient_11000.2.0.jar"/>
+	<classpathentry kind="lib" path="libs/TcSoaCommon_11000.2.0.jar"/>
+	<classpathentry kind="lib" path="libs/TcSoaCoreStrong_11000.2.0.jar"/>
+	<classpathentry kind="lib" path="libs/TcSoaCoreTypes_11000.2.0.jar"/>
+	<classpathentry kind="lib" path="libs/TcSoaQueryStrong_11000.2.0.jar"/>
+	<classpathentry kind="lib" path="libs/TcSoaQueryTypes_11000.2.0.jar"/>
+	<classpathentry kind="lib" path="libs/TcSoaStrongModel_11000.2.0.jar"/>
+	<classpathentry kind="lib" path="libs/xercesImpl.jar"/>
+	<classpathentry kind="lib" path="libs/xml-apis.jar"/>
+	<classpathentry kind="lib" path="libs/commons-codec.jar"/>
+	<classpathentry kind="lib" path="libs/commons-httpclient-3.1.jar"/>
+	<classpathentry kind="lib" path="libs/TcSoaWorkflowLoose_11000.2.0.jar"/>
+	<classpathentry kind="lib" path="libs/TcSoaWorkflowRac_11000.2.0.jar"/>
+	<classpathentry kind="lib" path="libs/TcSoaWorkflowTypes_11000.2.0.jar"/>
+	<classpathentry kind="lib" path="libs/jl1.0.jar"/>
+	<classpathentry kind="lib" path="libs/mp3spi1.9.4.jar"/>
+	<classpathentry kind="lib" path="libs/tritonus_share.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
