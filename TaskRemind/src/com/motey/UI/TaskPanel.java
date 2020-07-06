@@ -182,7 +182,12 @@ public class TaskPanel extends JPanel implements MouseListener{
 				
 			}else if(source.equals(taskActionIcon)){
 				
-				parent.taskAction(task);
+				try {
+					parent.taskAction(task);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+					new MessageDialog(e1.getMessage(), MessageDialog.ERROR, this).setVisible(true);;
+				}
 				
 			}else{
 				return;

@@ -5,7 +5,7 @@
   <Link ip="SFGKTESTENV" host="7001"/>  
   <AutoLogin>TRUE</AutoLogin>  
   <Alert autoClosetime="10000" autoCloseTime="3"/>  
-  <Startup>FALSE</Startup>  
+  <Startup>TRUE</Startup>  
   <Refresh interval="2"/>  
   <RelatedRichClient>TRUE</RelatedRichClient>  
   <RichClientPath>D:\RAC4T\portal</RichClientPath>  

@@ -96,13 +96,18 @@ public class OptionGeneralPanel extends OptionPanel {
 
 	@Override
 	public void save() {
-		ConfigWriter.setStartup(autoStartup_cb.isSelected());
-		int interval = 0;
-		if(timingRefrech_ck.isSelected()){
-			interval = Integer.parseInt(interval_text.getText());
+		try {
+			ConfigWriter.setStartup(autoStartup_cb.isSelected());
+			int interval = 0;
+			if(timingRefrech_ck.isSelected()){
+				interval = Integer.parseInt(interval_text.getText());
+			}
+			ConfigWriter.writeRefreshInteval(interval);
+			ConfigWriter.writeIsRelatedRichClient(relatedRichClient_cb.isSelected());
+			ConfigWriter.writeRichClientPath(richClientPath_text.getText());
+		}catch(Exception e) {
+			MessageDialog md = new MessageDialog(e.getMessage(), MessageDialog.WARNING, this);
+			md.setVisible(true);
 		}
-		ConfigWriter.writeRefreshInteval(interval);
-		ConfigWriter.writeIsRelatedRichClient(relatedRichClient_cb.isSelected());
-		ConfigWriter.writeRichClientPath(richClientPath_text.getText());
 	}
 }

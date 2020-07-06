@@ -7,6 +7,8 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.MalformedURLException;
 
+import javax.swing.JOptionPane;
+
 import org.dom4j.Attribute;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -15,6 +17,7 @@ import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 
+import com.motey.UI.MessageDialog;
 import com.motey.utils.FileUtil;
 
 public class ConfigWriter {
@@ -188,26 +191,22 @@ public class ConfigWriter {
 		} 
 	}
 	
-	public static void setStartup(boolean flag){
+	public static void setStartup(boolean flag) throws Exception{
 		
 		String str = flag ? "TRUE":"FALSE";
-		try {
-			
-			Document document = read();
-			Element root = document.getRootElement();
-			Element autoElement = root.element("Startup");
-			if(autoElement == null){
-				autoElement = root.addElement("Startup");
-			}
-			autoElement.setText(str);
-			
-			save(document);
-			
-			setStartupBat(flag);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		} 
+		
+		Document document = read();
+		Element root = document.getRootElement();
+		Element autoElement = root.element("Startup");
+		if(autoElement == null){
+			autoElement = root.addElement("Startup");
+		}
+		autoElement.setText(str);
+		
+		save(document);
+		
+		setStartupBat(flag);
+		
 	}
 	
 	private static void setStartupBat(boolean isStartup) throws Exception {
@@ -220,6 +219,10 @@ public class ConfigWriter {
 			String runPath = java.net.URLDecoder.decode(ConfigWriter.class.getResource("/").getFile(),"utf-8"); 
 			if(runPath.startsWith("\\") || runPath.startsWith("/"))runPath = runPath.substring(1);
 			FileUtil.copyFile(new File(runPath+"run.bat"), startupFile);
+			
+			if(!startupFile.exists()) {
+				throw new Exception("设置开机自启动失败，可尝试关闭安全软件后重试！");
+			}
 			
 			String runText = FileUtil.readData(startupFile.getAbsolutePath());
 			runText = runText.replace("%~dp0", runPath).replace("%cd%", runPath);

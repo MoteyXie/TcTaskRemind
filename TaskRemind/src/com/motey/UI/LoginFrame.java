@@ -86,6 +86,11 @@ public class LoginFrame extends JFrame {
 		setActionListener();
 		
 		getRootPane().setDefaultButton(loginPanel.inputPanel.login_btn);
+		
+		//自动登录
+		if(loginPanel.inputPanel.isAutoLogin()) {
+			loginPanel.inputPanel.login_btn.doClick();
+		}
 	}
 	
 	public void display(){

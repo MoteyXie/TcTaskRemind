@@ -1,6 +1,7 @@
 package com.motey.UI;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.geom.RoundRectangle2D;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -101,6 +103,8 @@ public class MainListFrame extends JFrame {
 	private boolean isRelatedRichClient = false;
 	private String richClientPath = "";
 
+	private boolean openClientWhenClickTask = true;
+
 	public static void main(String[] args) {
 		
 		MainListFrame frame = new MainListFrame();
@@ -157,17 +161,14 @@ public class MainListFrame extends JFrame {
 		label_2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				int flag = JOptionPane.showConfirmDialog(personPanel, "是否要打开胖客户端？");
-				if(flag == 0) {
-					try {
-						openWithRichClient(null);
-					} catch (Exception e1) {
-						e1.printStackTrace();
-						MessageDialog dialog = new MessageDialog(e1.getMessage(), ERROR, null);
-						dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-						dialog.setVisible(true);
-					}
-				}
+				try {
+					openWithRichClientWhenAgree(personPanel, null);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+					MessageDialog dialog = new MessageDialog(e1.getMessage(), ERROR, null);
+					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+					dialog.setVisible(true);
+				}	
 			}
 		});
 		
@@ -261,11 +262,10 @@ public class MainListFrame extends JFrame {
 		selectedTaskTitleLabel.setFont(new Font("微软雅黑", Font.PLAIN, 17));
 		selectedTaskTitleLabel.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e){
-//				taskAction(selectedTaskPanel.getTask());
+				
 				try {
-					int flag = JOptionPane.showConfirmDialog(personPanel, "是否要打开胖客户端？");
-					
-					if(flag == 0)openWithRichClient(selectedTaskPanel.getTask().getTaskObject());
+					taskAction(selectedTaskPanel.getTask());
+//					openWithRichClientWhenAgree(personPanel, selectedTaskPanel.getTask().getTaskObject());
 				} catch (Exception e1) {
 					e1.printStackTrace();
 					MessageDialog dialog = new MessageDialog(e1.getMessage(), ERROR, null);
@@ -536,29 +536,35 @@ public class MainListFrame extends JFrame {
 		}
 	}
 	
-	public void taskAction(TaskModel task){
+	public void taskAction(TaskModel task) throws Exception{
 		
-		ActionDialog actionFrame = ActionFrameFactory.getActionDialog(this, task);
-		
-		if(actionFrame == null){
-			new MessageDialog("暂不支持此任务类型的操作！", MessageDialog.ERROR, this);
-			return;
-		}
-		actionFrame.setVisible(true);
-		String result = actionFrame.getResult();
-		if(result == null)return;
-		
-		
-		if(actionFrame.isSuccess){
-			new MessageDialog("操作成功！\n"+result, MessageDialog.RIGHT, this);
-			try {
-//				refreshTask();
-				readerManeger.reading();
-			} catch (Exception e) {
-				e.printStackTrace();
+		if(openClientWhenClickTask) {
+			
+			openWithRichClientWhenAgree(this, task.getTaskObject());
+			
+		}else {
+			ActionDialog actionFrame = ActionFrameFactory.getActionDialog(this, task);
+			
+			if(actionFrame == null){
+				new MessageDialog("暂不支持此任务类型的操作！", MessageDialog.ERROR, this);
+				return;
 			}
-		}else{
-			new MessageDialog("操作失败！\n"+result, MessageDialog.ERROR, this);
+			actionFrame.setVisible(true);
+			String result = actionFrame.getResult();
+			if(result == null)return;
+			
+			
+			if(actionFrame.isSuccess){
+				new MessageDialog("操作成功！\n"+result, MessageDialog.RIGHT, this);
+				try {
+//					refreshTask();
+					readerManeger.reading();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}else{
+				new MessageDialog("操作失败！\n"+result, MessageDialog.ERROR, this);
+			}
 		}
 	}
 	
@@ -599,6 +605,15 @@ public class MainListFrame extends JFrame {
 		return readerManeger;
 	}
 	
+	public void openWithRichClientWhenAgree(Component component, ModelObject mo) throws Exception {
+		
+		int flag = JOptionPane.showConfirmDialog(component, "是否要打开胖客户端？");
+		if(flag == 0) {
+			openWithRichClient(mo);
+		}
+		
+	}
+	
 	public void openWithRichClient(ModelObject mo) throws Exception {
 		
 		ConfigWriter.initStartWithTargetBat();
@@ -620,15 +635,20 @@ public class MainListFrame extends JFrame {
 	public void displayDetail(TaskModel taskModel){
 		
 		try{
-			if(isRelatedRichClient) {
-				openWithRichClient(taskModel.getTaskObject());
-			}else {
-				TaskMenu menu = taskMenus.get(taskModel.getTaskTypeModel().getTaskName());
-				TaskListPanel listPanel = taskListPanels.get(menu);
-				TaskPanel taskPanel = listPanel.getTaskPanel(taskModel);
-				clickedTaskMenu(menu);
-				clickedTaskPanel(taskPanel);
-			}
+//			if(isRelatedRichClient) {
+//				openWithRichClient(taskModel.getTaskObject());
+//			}else {
+//				TaskMenu menu = taskMenus.get(taskModel.getTaskTypeModel().getTaskName());
+//				TaskListPanel listPanel = taskListPanels.get(menu);
+//				TaskPanel taskPanel = listPanel.getTaskPanel(taskModel);
+//				clickedTaskMenu(menu);
+//				clickedTaskPanel(taskPanel);
+//			}
+			TaskMenu menu = taskMenus.get(taskModel.getTaskTypeModel().getTaskName());
+			TaskListPanel listPanel = taskListPanels.get(menu);
+			TaskPanel taskPanel = listPanel.getTaskPanel(taskModel);
+			clickedTaskMenu(menu);
+			clickedTaskPanel(taskPanel);
 			
 		}catch(Exception e){
 			e.printStackTrace();
